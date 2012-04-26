@@ -1,0 +1,16 @@
+# desktop is the default view, you could add a mobile view etc.
+desktop:
+    # define a default template for use in pages
+    layout: "layouts/application"
+    pages:
+        # a root page called index
+        index:
+            # content contains all the parts of the page, in this case one partial
+            content: ["homepage"]
+
+        webdevnights01:
+            content: ["webdevnights01"]
+        feature-flipping:
+            content: ["feature-flipping"]
+        akjs01:
+            content: ["akjs01"]

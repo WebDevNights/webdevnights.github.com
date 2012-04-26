@@ -1,0 +1,153 @@
+#impress.feature-flipping
+  #first.step.centered{ "data-x" => "-1400", "data-y" => "-2200", "data-scale" => 2.5 }
+    %h1 Feature Flipping
+    %h2 Mal Curtis
+  .step.centered{ "data-x" => "-1400", "data-y" => "-1500" }
+    %h1 What is feature flipping?
+
+  .step.centered{ "data-x" => "-1400", "data-y" => "-1000" }
+    %h1 Abstract Overview
+    %p "an approach to development that helps solve some of the issues associated with risk management and quality assurance when a fast moving development team expands." <em>Chris Campbell, 99designs</em>
+
+  .step.centered{ "data-x" => "-1400", "data-y" => "-500" }
+    %h1 Functional Benefits
+    %p  "Feature flags and flippers mean we don’t have to do merges, and that all code (no matter how far it is from being released) is integrated as soon as it is committed. Deploys become smaller and more frequent; this leads to bugs that are easier to fix, since we can catch them earlier and the amount of changed code is minimized." <em>Ross Harmes, Flickr</em>
+
+  .step.centered{ "data-x" => "-1400", "data-y" => "100" }
+    %h1 Typically Dry Martin Fowler Explanation
+    %p "The basic idea is to have a configuration file that defines a bunch of toggles for various features you have pending. The running application then uses these toggles in order to decide whether or not to show the new feature." <em>Martin Fowler, Famous Developer Type</em>
+
+  .step.centered{ "data-x" => "00", "data-y" => "100", "data-scale" => 0.5}
+    %h1 Why would you do this?
+  .step.centered{ "data-x" => "00", "data-y" => "300", "data-scale" => 0.5 }
+    %h2 Test new features in a <strong>live</strong> production environment
+  .step.centered{ "data-x" => "00", "data-y" => "450", "data-scale" => 0.5 }
+    %h2 Allow stakeholders to view new features without a staging server, or a VM
+  .step.centered{ "data-x" => "00", "data-y" => "550", "data-scale" => 0.5 }
+    %h2 Branches suck
+  .step.centered{ "data-x" => "00", "data-y" => "670", "data-scale" => 0.5 }
+    %h2 Don't fear deployment
+  .step.centered{ "data-x" => "500", "data-y" => "670", "data-scale" => 0.1 }
+    %img{ src: "/assets/images/keep-calm.png", height: 450 }
+  .step.centered{ "data-x" => "00", "data-y" => "800", "data-scale" => 0.5 }
+    %h2 Easy to rollback
+  .step.centered{ "data-x" => "00", "data-y" => "950", "data-scale" => 0.5 }
+    %h2 Phased rollout:<br>Test things on your users, react to responses
+  .step.centered{ "data-x" => "700", "data-y" => "950", "data-scale" => 0.5 }
+    %h2
+      %img{ src: "/assets/images/doing-it-wrong.jpg"}
+    %h2 Users
+  .step.centered{ "data-x" => "1400", "data-y" => "950", "data-scale" => 0.5 }
+    %h2
+      %img{ src: "/assets/images/servers.jpg" }
+    %h2 Infrastructure
+  .step.centered{ "data-x" => "00", "data-y" => "1100", "data-scale" => 0.5 }
+    %h2 Get marketing off your back
+
+  .step.centered{ "data-x" => "00", "data-y" => "1500", "data-rotate" => 90, "data-scale" => 0.5  }
+    %h1 How does it work?
+
+  .step.centered.light{ "data-x" => "-800", "data-y" => "1500", "data-rotate" => 90 }
+    %h2 Wrap content in simple conditionals
+    %code
+      %pre
+        :preserve
+          if some_feature<br>
+            do some feature thing<br>
+          end<br>
+
+  .step.centered.dark{ "data-x" => "-1600", "data-y" => "1500", "data-rotate" => 90 }
+    %img{ src: "http://dl.dropbox.com/u/3155323/Screenshots/vszh.png" }
+
+  .step.centered.dark{ "data-x" => "-2000", "data-y" => "1500", "data-rotate" => 90 }
+    %img{ src: "http://dl.dropbox.com/u/3155323/Screenshots/07ye.png" }
+
+  .step.centered.dark{ "data-x" => "-2400", "data-y" => "1500", "data-rotate" => 90 }
+    %img{ src: "http://dl.dropbox.com/u/3155323/Screenshots/0enn.png" }
+
+  .step.centered.light{ "data-x" => "-3300", "data-y" => "1500", "data-rotate" => 180 }
+    %h1 Determining a feature’s state
+  .step.centered{ "data-x" => "-5000", "data-y" => "1500", "data-rotate" => 180 }
+    %h2 1. Default: On or Off
+  .step.centered{ "data-x" => "-5000", "data-y" => "1300", "data-rotate" => 180 }
+    %h2 2. Database / Persistent Store
+  .step.centered{ "data-x" => "-5000", "data-y" => "1100", "data-rotate" => 180 }
+    %h2 3. Cookie (Oh yea.)
+  .step.centered{ "data-x" => "-5000", "data-y" => "900", "data-rotate" => 180 }
+    %h2 4. Code
+    %h3 User.admin?, User.member?, User.courses.size > 4
+  .step.centered{ "data-x" => "-5000", "data-y" => "700", "data-rotate" => 180 }
+    %h2 5. Performance
+    %h3 Load > 5, AvgResponseTime > 2s
+
+
+  .step.centered{ "data-x" => "-5000", "data-y" => "300", "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 90, "data-rotate-y" => 0, }
+    %h1 Implementations
+  .step.centered{ "data-x" => "-5000", "data-y" => "-600", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 130, "data-rotate-y" => 0, }
+    %h2 Ruby
+    %h3 Flip github.com/pda/flip
+    %h3 Rollout github.com/jamesgolick/rollout
+    %h3 Degrade github.com/jamesgolick/degrade
+  .step.centered{ "data-x" => "-5000", "data-y" => "-1500", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 60, "data-rotate-y" => 0, }
+    %h2 PHP
+    %h3 FeatureToggle (Symfony) github.com/marekkalnik/FeatureToggleBundle
+  .step.centered{ "data-x" => "-5000", "data-y" => "-2400", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 130, "data-rotate-y" => 0, }
+    %h2 Python
+    %h3 Gargoyle (Django) github.com/disqus/gargoyle
+    %h3 Django Waffle (Django) github.com/jsocol/django-waffle
+  .step.centered{ "data-x" => "-5000", "data-y" => "-3300", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 60, "data-rotate-y" => 0, }
+    %h2 JavaScript
+    %h3 FeatureFlipperJS (Node)
+    %h3 github.com/bigodines/feature-flipper-js
+  .step.centered{ "data-x" => "-5000", "data-y" => "-4200", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 130, "data-rotate-y" => 0, }
+    %h2 .net
+    %h3 FeatureToggle
+    %h3 github.com/jason-roberts/FeatureToggle
+  .step.centered.light{ "data-x" => "-5000", "data-y" => "-5100", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 60, "data-rotate-y" => 0, }
+    %h2 Groovy
+    %h3 GrailsFeatureToggle 
+    %h3 github.com/ryannorris/grails-feature-toggle
+
+  .step.centered.dark{ "data-x" => "-5000", "data-y" => "-6100", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 90, "data-rotate-y" => 0 }
+    %h1 Demo
+
+  .step.centered.light{ "data-x" => "-5000", "data-y" => "6100", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 90, "data-rotate-y" => 0 }
+    %h1 Danger Zone
+  .step.centered.light{ "data-x" => "-5000", "data-y" => "6100", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %img{ src: "/assets/images/danger-zone.jpg" }
+  .step.centered.light{ "data-x" => "-5640", "data-y" => "6100", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %h2 4.7/10 from 393 users
+    %p "Robert Downey Jr. is scraping the barrel bottoms. Billy Zane seems to have one expression: disdain/disgust. You want cliche's? This movie is one BIG cliche'." <em>rlowe, New Orleans</em>
+
+  .step.centered.light{ "data-x" => "-7500", "data-y" => "6100", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %h1 Feature Flipping is not always appropriate
+  .step.centered.light{ "data-x" => "-7500", "data-y" => "6500", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %h2 Database schema changes
+    %h3 Add, not alter
+    %h3 Remove when safe
+  .step.centered.light{ "data-x" => "-7500", "data-y" => "6900", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %h2 Infrastructure changes
+  .step.centered.light{ "data-x" => "-7500", "data-y" => "7500", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %img{ src: "/assets/images/shit.png", style: "float:left; " }
+    %h2 Don't create technical debt
+    %h2 Clean up your shit.
+
+  .step.centered.light{ "data-x" => "-7500", "data-y" => "8500", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %h1 Que?
+    %h2 Mal Curtis
+    %h3 @snikchnz
+
+  .step.centered.light{ "data-x" => "-7500", "data-y" => "9600", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %h1 Links
+  .step.centered.light{ "data-x" => "-7500", "data-y" => "10000", "data-z" => -300, "data-rotate" => 180, "data-rotate-z" => 180, "data-rotate-x" => 180, "data-rotate-y" => 0 }
+    %h3 Flipping Out
+    %h4 code.flickr.com/blog/2009/12/02/flipping-out/
+    %h3 Feature Flipping
+    %h4 99designs.com/tech-blog/blog/2012/03/01/feature-flipping/
+    %h3 FeatureToggle
+    %h4 martinfowler.com/bliki/FeatureToggle.html
+    %h3 How does Etsy manage development and operations?
+    %h4 codeascraft.etsy.com/2011/02/04/how-does-etsy-manage-development-and-operations/
+    %h3 Feature Bits: Enabling Flow Within and Across Teams 
+    %h4 www.infoq.com/presentations/Feature-Bits
+

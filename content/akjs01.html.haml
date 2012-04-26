@@ -1,0 +1,80 @@
+#impress
+  #first.step.centered{ "data-x" => "-1400", "data-y" => "-1500" }
+    %h1
+      %img{ src: "https://github.com/snikch/suite/raw/master/logo.png" }
+    %h2 Front End Development for Hackers
+
+  #youget.step.centered{ "data-x" => "0", "data-y" => "-1500" }
+    %h1 You get
+    %ul.aligned-list
+      %li CoffeeScript
+      %li SASS
+      %li HAML
+      %li Sprockets
+      %li Minifying
+      %li Cache Busting
+      %li Dev Server
+      %li Scaffolding
+      %li Happiness
+  #youdont.step.centered{ "data-x" => "1400", "data-y" => "-1500" }
+    %h1 It doesn’t
+    %ul.aligned-list
+      %li Have routes
+      %li Access a database
+      %li Give you a controller
+      %li Get fat models
+      %li Cache
+      %li Cook eggs
+
+  #why.step.centered{ "data-x" => "0", "data-y" => "0", "data-scale" => "4" }
+    %h1
+      %large Why...
+
+  #whynot.step{ "data-x" => "1200", "data-y" => "2100", "data-scale" => "5", "data-rotate" => "90", "data-transition-duration" => "300" }
+    %h2 did I create it?
+    %p Designed to scratch my own itch while developing a non dynamic site. I wanted SASS and CoffeeScript. I wanted HAML for my content. Eventually running sass, coffeescript and a build script became enough of a hindrance that I started to think bigger, and Suite was born.
+
+  #whyyou.step{ "data-x" => "4200", "data-y" => "2100", "data-scale" => "5", "data-rotate" => "90", "data-transition-duration" => "300" }
+    %h2 would you use it?
+    %h3 Automatically compile coffeescript, sass etc.
+    %h3 Separate files logically (contact.js, core.js, menu.js)
+    %h3 Compiles for deploy, minify and compress
+    %h3 Compiles to fingerprinted files (screw you caches)
+    %h3 Pretty much it’s the Rails asset pipeline
+
+  #how.step.centered{ "data-x" => "0", "data-y" => "17300", "data-scale" => "6", "data-rotate" => "180" }
+    %h2 This sounds awesome
+    %h1
+      %large How do I use it?
+  #code.step{ "data-x" => "0", "data-y" => 15000, "data-scale" => "6", "data-rotate" => "180" }
+    %h1 <code>gem install suite</code><br />(yes, it’s in ruby)
+
+  .step{ "data-x" => "0", "data-y" => 12800, "data-scale" => "6", "data-rotate" => "180" }
+    %h1 <code>suite project <em>name</em></code>
+    %p Creates a new project in the folder <em>name</em>. Prompts for some config, creates assets, config and content directories.
+
+  .step{ "data-x" => "0", "data-y" => 10600, "data-scale" => "6", "data-rotate" => "180" }
+    %h1 <code>suite server</code>
+    %p Run in a project folder. Starts a development server at 0.0.0.0:9000. Pages and assets are rendered on the fly.
+
+  .step{ "data-x" => "0", "data-y" => 7900, "data-scale" => "6", "data-rotate" => "180" }
+    %h1 <code>suite build</code>
+    %p Run in a project folder. Outputs to build folder. Compiles pages to static html. Compiles assets to fingerprinted files (e.g. 79c61759396ec4e3498452b7d3675dff.js).
+    %p JS and CSS are minified and compressed according to your config.yml.
+
+  #thatsit.step.centered{ "data-x" => "560", "data-z" => "500", "data-y" => 7900, "data-scale" => "6", "data-rotate-y" => "0", "data-rotate-z" => "90", "data-rotate-x"=> "90"  }
+    %h1 that’s it!
+  #demo.step.centered{ "data-x" => "560", "data-z" => "500", "data-y" => 17900, "data-scale" => "0.1", "data-rotate-y" => "0", "data-rotate-z" => "90", "data-rotate-x"=> "90"  }
+
+    //#.step.centered{ "data-x" => "780", "data-y" => 7900, "data-scale" => "0.1", "data-rotate" => "300" }
+    %h1 demo time...
+  .step.centered{ "data-x" => "2880", "data-y" => 7900, "data-scale" => "0.1", "data-rotate" => "300" }
+    %h1 Thanks
+    %h2 github.com/snikch/suite
+    %h2 @snikchnz
+
+  .step.centered{ "data-x" => "3880", "data-y" => 7900, "data-scale" => "0.1", "data-rotate" => "300" }
+    %h1 oh, one more thing...
+  #nights.step.centered{ "data-x" => "4880", "data-y" => 7900, "data-scale" => "0.1", "data-rotate" => "300" }
+    %h1 Join Auckland Web Dev Nights
+    %h2 meetup.com/auckland-web-dev-nights
