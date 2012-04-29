@@ -1,5 +1,5 @@
 # desktop is the default view, you could add a mobile view etc.
-desktop:
+gh-pages:
     # define a default template for use in pages
     layout: "layouts/application"
     pages:

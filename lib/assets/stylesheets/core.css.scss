@@ -1,0 +1,34 @@
+#impress code{
+	display:block;
+	text-align:left;
+	line-height: 100%;
+	font-size: 40px;
+}
+
+.logo{
+	margin:20px;
+}
+.left{
+	float:left;
+}
+.right{
+	float: right;
+}
+#impress a{
+	text-decoration: none;
+	img{
+		vertical-align: middle;
+		padding: 0 6px 0 0;
+	}
+	&.github{
+		padding-left: 48px;
+		background-image: url('/assets/images/octocat.png');
+		background-position: 10px center;
+		background-repeat: no-repeat;
+	}
+}
+.footnote{
+	font-size: 14px;
+	width: 450px;
+	color: #888;
+}
