@@ -9,8 +9,9 @@ gh-pages:
             content: ["homepage"]
 
         webdevnights01:
-            content: ["webdevnights01"]
+            content: ["cockblock", "webdevnights01"]
         feature-flipping:
-            content: ["feature-flipping"]
+            index:
+                content: ["cockblock", "feature-flipping"]
         akjs01:
             content: ["akjs01"]

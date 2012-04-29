@@ -1,3 +1,35 @@
+.impress-supported #banner{
+	opacity: 0.1;
+}
+#banner{
+	position: absolute;
+	opacity: 1;
+	width: 100%;
+	left: 0;
+	top: 0;
+	background: #343434;
+	padding: 20px;
+	@include transition(2s ease);
+	&:hover{
+		opacity: 1;
+	}
+	h1{
+		font-size: 24px;
+		color: #fff;
+		text-shadow: 1px 1px 1px #000;
+	}
+	p{
+		float: right;
+		margin: 0;
+		padding-right: 40px;
+		text-align: right;
+		line-height: 20px;
+	}
+	a{
+		color: #fff;
+		font-size: 18px;
+	}
+}
 #impress code{
 	display:block;
 	text-align:left;
@@ -13,6 +45,9 @@
 }
 .right{
 	float: right;
+}
+.disabled{
+	opacity: 0.5;
 }
 #impress a{
 	text-decoration: none;
