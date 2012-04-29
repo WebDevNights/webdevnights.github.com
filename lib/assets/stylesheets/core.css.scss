@@ -36,6 +36,16 @@
 	line-height: 100%;
 	font-size: 40px;
 }
+#suite{
+	position: absolute;
+	bottom:10px;
+	right: 10px;
+	text-align: center;
+	opacity: 0.2;
+	img{ vertical-align: middle; padding-bottom: 10px; }
+	a{ color: #333; text-decoration: none; }
+	&:hover{ opacity: 1; }
+}
 
 .logo{
 	margin:20px;
