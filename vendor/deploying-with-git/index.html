@@ -1,0 +1,410 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<title>Deploying with Git</title>
+		<meta name="description" content="">
+		<meta name="author" content="ghoststreet.co.nz">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="stylesheet" href="css/style.css?v=2">
+
+        <script src="lib/modernizr.2.js"></script>
+
+	</head>
+
+	<body class="debu">
+
+		<div id="slideshow"></div>
+
+		<!-- Slide contents here -->
+		<div id="data" class="hidden">
+
+			<div id="gs_smoke" style="height: 100%;">
+				<canvas id="smoke" width="120" height="120"></canvas>
+				<div id="ghoststreet">
+					<img id="gs_logo" src="img/gs-logo.png" />
+				</div>
+			</div>
+
+			<div id="welcome" >
+				<h3><br /></h3>
+				<h2>Deploying with Git</h2>
+				<h4>(and not much else)</h4>
+                <h3><br /></h3>
+				<h4 class="red">Jordan Bullivant</h4>
+                <h5>Contact: <a href="mailto:jordan@ghoststreet.co.nz">jordan@ghoststreet.co.nz</a></h5>
+                <h5></h5>
+			</div>
+
+			<div id="outline" >
+                <h3>Some Caveats</h3>
+                <ul>
+                    <li>I'm pretty new to this</li>
+                    <li>We do "almost static" websites</li>
+                    <li>Sufficiently complex projects should have CI</li>
+                </ul>
+			</div>
+
+            <div id="why" >
+                <h3>Why, though?</h3>
+                <br /><br />
+                <h5>Why is this a good idea again?</h5>
+			</div>
+
+			<div id="why_1" >
+                <h3 class="dim">Why, though?</h3>
+                <section class="clear">
+                    <h4>1. It's easy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h4>
+                </section>
+                <section>
+                    <h4>1. It's eas[y|ier]</h4>
+                </section>
+                <ul>
+                    <li>FTP is mouse-heavy, annoying</li>
+                    <li>Quit alt-tabbing</li>
+                    <li>Editor integration</li>
+                </ul>
+			</div>
+
+			<div id="why_2" >
+                <h3 class="dim">Why, though?</h3>
+                <h4>2. Version Consistency</h4>
+                <ul>
+                    <li>Total consistency over multiple deployments</li>
+                    <li>Single deploy path = harnessed laziness</li>
+                </ul>
+                <br />
+                <section>
+                    <blockquote>"When the best way is also the simplest, <br />laziness and diligence are indistinguishable."</blockquote>
+                </section>
+                <section>
+                    <q>- Probably</q>
+                </section>
+			</div>
+
+			<div id="why_3" >
+                <h3 class="dim">Why, though?</h3>
+                <h4>3. Free repo backup</h4>
+                <ul>
+                    <li>Deploy your entire project history</li>
+                    <li>Offsite FTW</li>
+                    <li>No real effort</li>
+                </ul>
+			</div>
+
+			<div id="intertitle_type1" >
+                <h4>Deploying with Git</h4>
+                <h2 class="intertitle">Type 1</h2>
+                <h4>Basic Setup</h4>
+			</div>
+
+            <div id="bare" >
+                <h3>You need a bare repo</h3>
+                <section>
+                    <h4>What is a bare repo?</h4>
+                </section>
+                <section>
+                    <h5>A repo which does not have an associated working directory.</h5>
+                    <br />
+                </section>
+                <section>
+                    <h4>What's wrong with the other type?</h4>
+                    <h5>You can't push to a non-bare repo on a checked-out branch</h5>
+                    <br />
+                </section>
+                <section>
+                    <h4>How do I make one?</h4>
+                    <code><em>$</em> git init --bare reponame.git</code>
+                </section>
+			</div>
+
+			<div id="bare_dir_1">
+                <h5>Directory Structure of Normal Repo</h5>
+                <br />
+                <img src="img/fig1_nonbare.png" />
+            </div>
+
+            <div id="bare_dir_2">
+                <h5>Directory Structure of Bare Repo</h5>
+                <br />
+                <img src="img/fig2_bare.png" />
+                <section>
+                    <br />
+                    <p>Bare repos are usually to be checked-out to various locations <br /> by multiple users. This is the part we want to automate.</p>
+                </section>
+			</div>
+
+			<div id="hooks" >
+				<h3>Hooks</h3>
+                <h5>Hooks are a standard set of scripts <br /> executed at various stages of git operations</h5>
+                <section>
+                    <br />
+                    <h4>We care about:</h4>
+                </section>
+                <ul>
+                    <li>hooks/post-receive</li>
+                    <li>hooks/post-update</li>
+                </ul>
+			</div>
+
+			<div id="useful" >
+                <h3>Let's look at something useful:</h3>
+                <section>
+                    <h5>Here's an example layout of the project</h5>
+                    <img src="img/fig3_proj1_layout.png" />
+                </section>
+			</div>
+
+			<div id="step1" >
+                <h3 class="dim">Something Useful</h3>
+                <h5>1. Make your bare repo</h5>
+                <code>
+                    <em>$</em> cd repos <br />
+                    <em>$</em> git init --bare myproj.git
+                </code>
+			</div>
+
+			<div id="step2" >
+                <h3 class="dim">Something Useful</h3>
+                <h5>2. Create post-receive hook</h5>
+                <section>
+                    <code>
+                        <em>$</em> vim myproj.git/hooks/post-receive <br />
+                    </code>
+                </section>
+                <section>
+                    <code class="sh">
+                        <q>#!/bin/sh</q> <br />
+                        <em>GIT_WORK_TREE</em>=webroot/www.myproj.com <br />
+                        git checkout -f
+                    </code>
+                </section>
+                <section>
+                    <code>
+                        <em>$</em> chmod <strong>+x</strong> myproj.git/hooks/post-receive
+                    </code>
+                </section>
+			</div>
+
+			<div id="step3" >
+                <h3 class="dim">Something Useful</h3>
+                <h5>3. Bind remote repo</h5>
+                <code class="local wide">
+                    <em>$</em> git remote add <em>origin</em> ssh://me.sharedhost.com/home/me/repos/myproj.git
+                </code>
+                <section>
+                    <br />
+                    <p>Note:</p>
+                </section>
+                <section>
+                <p>You can't clone the new repo in order to set<br />up your remotes automatically (like github).<br />There needs to be some data in it first.</p>
+                </section>
+            </div>
+
+			<div id="step4" >
+                <h3 class="dim">Something Useful</h3>
+                <h5>4. Deploy instantly</h5>
+                <code class="local">
+                    <em>$</em> git add . <br />
+                    <em>$</em> git commit -m "My rad changes" <br />
+                    <em>$</em> git push origin master <br />
+                </code>
+			</div>
+
+            <div id="intertitle_type2" class="">
+                <h4>Deploying with Git</h4>
+                <h2 class="intertitle">Type 2</h2>
+                <h4>Multiple Deployments</h4>
+			</div>
+
+            <div id="separate" >
+
+                <h4>Deploying to Live and Dev <br />Locations Separately</h4>
+
+                <section>
+                    <h5>Case 1: Separate Servers</h5>
+                </section>
+                <section>
+                <p>Well, this is pretty easy. Just do the same thing <br />twice, then bind them with different aliases.</p>
+                </section>
+                <section>
+                    <code class="local wide">
+                        <em>$</em> git remote add <em>live</em> &nbsp;&nbsp; ssh://me.sharedhost.com/home/me/repos/myproj.git <br />
+                        <em>$</em> git remote add <em>staging</em> ssh://me.someotherhost.com/home/me/repos/myproj.git
+                    </code>
+                </section>
+                <section>
+                    <code class="local wide">
+                        <em>$</em> git push <em>live</em> master
+                    </code>
+                    <code class="local wide">
+                        <em>$</em> git push <em>staging</em> master
+                    </code>
+                    <p><em>Done.</em></p>
+                </section>
+
+            </div>
+
+            <div id="same_1">
+                <h4>Deploying to Live and Dev <br />Locations Separately</h4>
+                <section>
+                    <h5>Case 2: The Same Server</h5>
+                </section>
+            </div>
+
+            <div id="same_1a">
+                <h5>New example project layout:</h5>
+                <img src="img/fig4_proj2_layout.png" />
+            </div>
+
+            <div id="same_2">
+                <h5>The new hook: post-update</h5>
+                <code class="sh wide">
+                    <q>#!/bin/sh</q>                                                     <br />
+                    LIVE_DIR="webroot/myproj"                                            <br />
+                    TEST_DIR="webroot/staging/myproj"                                    <br />
+                                                                                         <br />
+                    <q># Scrape branch name from incoming arguments</q>                  <br />
+                    BRANCH=$( echo $1 | awk '{ split ($1,a,"/") } END { print a[3]; }' ) <br />
+                                                                                         <br />
+                    <q># Set checkout directory based on branch name</q>                 <br />
+                    case $BRANCH in                                                      <br />
+                    &nbsp; &nbsp; "master")  CHECKOUT_DIR="$LIVE_DIR" ;;                 <br />
+                    &nbsp; &nbsp; "staging") CHECKOUT_DIR="$TEST_DIR" ;;                 <br />
+                    esac                                                                 <br />
+                                                                                         <br />
+                    <q># Checkout this branch to appropriate directory</q>               <br />
+                    GIT_WORK_TREE="$CHECKOUT_DIR"                                        <br />
+                    git checkout $BRANCH -f                                              <br />
+                </code>
+
+            </div>
+
+            <div id="same_3" >
+                <h5>Add remote alias:</h5>
+                <code class="local wide">
+                    <em>$</em> git remote add origin ssh://me.sharedhost.com/home/me/repos/myproj.git
+                </code>
+                <section>
+                    <br />
+                    <h5><em>inherently</em> supports</h5>
+                    <h4>Branch + Merge based workflow</h4>
+                </section>
+            </div>
+
+            <div id="same_4" class="compress">
+                <h5>Branch + Merge Workflow</h5>
+                <p>Always do new work on a dev branch</p>
+                <code class="local">
+                    <em>$</em> git checkout -b staging <br />
+                    . . . <br />
+                    <em>$</em> git add . <strong>&amp;&amp;</strong> git commit -m "My rad changes"
+                </code>
+                <section>
+                    <p>Preview on staging server</p>
+                    <code class="local">
+                        <em>$</em> git push origin <em>staging</em>
+                    </code>
+                </section>
+                <section>
+                    <p>Merge into master branch when ready</p>
+                    <code class="local">
+                        <em>$</em> git checkout master <br />
+                        <em>$</em> git merge staging
+                    </code>
+                </section>
+                <section>
+                    <p>Push to live server from master branch</p>
+                    <code class="local">
+                        <em>$</em> git push origin <em>master</em>
+                    </code>
+                </section>
+            </div>
+
+			<div id="intertitle_type3" >
+                <h4>Deploying with Git</h4>
+                <h2 class="intertitle">Type 3</h2>
+                <h4>Complex Hooks</h4>
+			</div>
+
+            <div id="type3_a" >
+                <h4>This method can be extended...</h4>
+                <h5>Some hook ideas:</h5>
+                <ul>
+                    <li>Hooks can be in any language on the host machine</li>
+                    <li>Reject incoming push based on RSpec results</li>
+                    <li>Email interested parties</li>
+                    <li>Interactive decision making via ssh</li>
+                    <li>Re-generate online documentation</li>
+                    <li>Restart/reconfigure app server</li>
+                </ul>
+            </div>
+
+            <div id="type3_b" class="compress">
+                <h4>Going further...?</h4>
+                <section>
+                    <h4>Well, no.</h4>
+                </section>
+                <section>
+                    <p>For sufficiently complex projects, you'll need...</p>
+                </section>
+                <ul>
+                    <li>Developer communication workflow</li>
+                    <li>Continuous Integration</li>
+                    <li>Project management feedback<br/> (ie: tickets integration)</li>
+                </ul>
+                <section>
+                    <br />
+                    <h4>Complex projects will require<br />dedicated deployment solutions</h4>
+                    <p>(probably Capistrano)</p>
+                </section>
+            </div>
+
+            <div id="pointers" >
+
+                <h4>Some final pointers</h4>
+
+                <ul>
+                    <li>Set up ssh keys</li>
+                    <li><code><em>$</em> git config http.receivepack true</code></li>
+                    <li>Editor/IDE Integration</li>
+                </ul>
+
+                <section>
+                    <br />
+                    <p>eg: Vim:</p>
+                    <code class="local">
+                        nnoremap &lt;leader&gt;gc :!git add . &amp;&amp; git commit -m ""&lt;left&gt; <br />
+                        nnoremap &lt;leader&gt;gp :!git push
+                    </code>
+                </section>
+
+            </div>
+
+            <div id="pre_end">
+                <h3 class="intertitle white">That's it</h3>
+            </div>
+
+            <div id="end">
+                <h3 class="intertitle white">Thanks</h3>
+                <h5 class="green">jordan@ghoststreet.co.nz</h5>
+			</div>
+
+		</div>
+
+		<!-- Late JavaScript -->
+		<script src='lib/jquery.js'></script>
+		<script src="js/slideshow.js"></script>
+		<script src="js/ghostparticle.js"></script>
+		<script src="js/script.js"></script>
+
+	</body>
+</html>
