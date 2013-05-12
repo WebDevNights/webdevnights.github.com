@@ -1,5 +1,5 @@
 # desktop is the default view, you could add a mobile view etc.
-gh-pages:
+desktop:
     # define a default template for use in pages
     layout: "layouts/application"
     pages:
@@ -10,6 +10,8 @@ gh-pages:
 
         webdevnights01:
             content: ["cockblock", "webdevnights01"]
+        webdevnights02:
+            content: ["webdevnights02"]
         feature-flipping:
             index:
                 content: ["cockblock", "feature-flipping"]

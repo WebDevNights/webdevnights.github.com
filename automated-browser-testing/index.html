@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js - The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+<div class="slides">
+    <section>
+        <section>
+            <h1>Automating browser testing</h1>
+<div>Mal Curtis</div>
+<div>@snikchnz</div>
+        </section>
+        <section>
+            <h2>Browser Testing?</h2>
+<blockquote>Testing for differences in behaviour, and user interface, between browser brands and versions.</blockquote>
+        </section>
+        <section>
+            <h2>We accidentally created a monster</h2>
+<div>Client Side Web Apps</div>
+<div>
+    <br>
+</div>
+<div data-fragment-index="0">
+    <ul>
+<li class="fragment" data-fragment-index="0">Back end moving to 'just an api'</li>
+        <li class="fragment" data-fragment-index="1">Front end frameworks make it easier</li>
+        <li class="fragment" data-fragment-index="2">It's just so fast!</li>
+        <li class="fragment" data-fragment-index="3">But it's in the browser</li>
+        <li class="fragment" data-fragment-index="4">Not 'the' browser, but 'a' browser</li>
+    </ul>
+</div>
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+
+</section>
+            <section>
+                <h2 style="text-align: center;">Testing is mainstream</h2>
+<div>Unit / Integration / Acceptance</div>
+<div>
+    <br>
+</div>
+<div>
+    <ul>
+<li>Proven Track record</li>
+        <li>Unit tests are great for 'business' logic</li>
+        <li>Acceptance tests great for 'request / response'</li>
+<li>Not many people cross browser testing</li>
+    </ul>
+</div>
+</section>
+                <section>
+                    <h2>SO?</h2>
+<blockquote>"I thought we'd fixed all these browser inconsistencies years ago?"</blockquote>
+<p>
+<br>
+</p>
+<p>No: We fixed the old ones, and created new ones</p>
+<p>
+<br>
+</p>
+<p>
+</p>
+<ul>
+<li class="fragment" data-fragment-index="0">postMessage cross window communication</li>
+    <li class="fragment" data-fragment-index="1">Cross Origin Resource Sharing</li>
+    <li class="fragment" data-fragment-index="2">3rd Party Cookies</li>
+    <li class="fragment" data-fragment-index="3">Async script loading</li>
+    <li class="fragment" data-fragment-index="4">
+<span class="fragment" data-fragment-index="4">Web Fonts</span>
+                    <span class="fragment" data-fragment-index="5">|Sockets</span>
+                    <span class="fragment" data-fragment-index="6">|Workers</span>
+                    <span class="fragment" data-fragment-index="7">|Notifications</span>
+</li>
+    <li class="fragment" data-fragment-index="8">Browser DB Formats</li>
+</ul>
+<p>
+</p>
+
+
+</section>
+                    <section>
+                        <h2>Cross browser testing</h2>
+<h2>&nbsp;is <b>more important</b>&nbsp;</h2>
+<h2>now</h2>
+<h2>&nbsp;than ever</h2>
+<div>
+                        <br>
+                    </div>
+<div class="fragment">It's just not as obvious as a broken layout.</div>
+<ul>
+                </ul>
+<p>
+            </p>
+</section>
+            <section>
+                <h2 style="text-align: center;">Traditionally:</h2>
+<div>
+    <ul>
+<li style="text-align: left;" class="fragment">
+            <span style="text-align: center;">Start Browser</span>
+            <br>
+</li>
+        <li style="text-align: left;" class="fragment">
+            <span style="text-align: center;">Visit Page</span>
+            <br>
+</li>
+        <li style="text-align: left;" class="fragment">
+            <span style="text-align: center;">Follow process / interaction</span>
+            <br>
+</li>
+        <li style="text-align: left;" class="fragment">
+            <span style="text-align: center;">Fail / Success</span>
+            <br>
+</li>
+        <li style="text-align: left;" class="fragment">Fix bug and repeat (if failed)</li>
+        <li style="text-align: left;" class="fragment">Open next browser, start again</li>
+    </ul>
+</div>
+
+
+</section>
+                <section>
+                    <h1>That's Shit.</h1>
+<div>
+                    <i>And no fun.</i>
+                </div>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h2>Cross Browser testing <i>Can</i>&nbsp;be automated</h2>
+<div>
+    <img src="http://docs.seleniumhq.org/images/big-logo.png" style="">
+<br>
+</div>
+<div>
+    <ul>
+<li>Selenium: Browser Automation</li>
+        <li class="fragment">Not new, but&nbsp;under-utilised</li>
+        <li class="fragment">Possibly because of ugly logo</li>
+    </ul>
+</div>
+
+</section>
+                <section>
+                    <blockquote>"<span>Provides an interface with which to remote control a browser"</span>
+</blockquote>
+                    <p>
+                    <span>
+                        <br>
+                    </span>
+                </p>
+<p>
+            </p>
+<ul>
+<li>'WebDrivers' for every browser</li>
+<li>Client libraries for most languages</li>
+<li>Written in Java</li>
+</ul>
+        </section>
+        <section>
+            <h1>Demo 1</h1>
+<h2>
+    Google search
+</h2>
+<div>
+    <i>The 'hello world' of selenium</i>
+</div>
+</section>
+        </section>
+        <section>
+            <section>
+                <h2>Abstraction Libraries</h2>
+<div>A lot of languages have them</div>
+<div>
+                <br>
+            </div>
+<div>
+            <ul>
+<li>
+<span style="text-align: center;">
+            <b>Ruby</b>: Capybara</span>
+            <br>
+</li>
+<li>
+<span style="text-align: center;">
+            <b>Python</b>: Splinter</span>
+            <br>
+</li>
+<li>
+<span style="text-align: center;">
+            <b>Node</b>: Soda</span>
+            <br>
+</li>
+<li>
+<span style="text-align: center;">
+            <b>PHP</b>: Sausage (kinda)</span>
+            <br>
+</li>
+<li>
+<span style="text-align: center;">
+            <b>.net</b>: Could not find?</span>
+            <br>
+</li>
+</ul>
+        </div>
+    </section>
+    <section>
+        <h2>Simplifies the API</h2>
+<div>
+        <pre>
+            <code>driver.get "http://google.com"</code>
+            <code>element = driver.find_element name: "q"
+element.send_keys "how do i"</code>
+            <code>element = driver.find_element text: "Click me"
+<span style="font-family: monospace;">element.click</span>
+        </code>
+    </pre>
+</div>
+<div>becomes</div>
+<div style="text-align: left;">
+<pre>
+    <code>visit "http://google.com"</code>
+    <code>fill_in "q", with: "how do i" </code>
+    <code>click_link "Click me"</code>
+</pre>
+</div>
+</section>
+<section>
+    <h1>Demo 2</h1>
+<h2>Interactions</h2>
+</section>
+</section>
+<section>
+    <h2>ASSERTIONS<br>
+    </h2>
+    <div>
+        <ul>
+            <li>Good testing libraries have integration</li>
+            <li>Easy enough to do your own though</li>
+        </ul>
+        <div style="text-align: left;">
+            <br>
+        </div>
+    </div>
+    <div>
+        <pre>
+            <code>&nbsp; &nbsp; visit '/sessions/new'
+&nbsp; &nbsp; within("#session") do
+&nbsp; &nbsp; &nbsp; fill_in 'Login', :with =&gt; 'user@example.com'
+&nbsp; &nbsp; &nbsp; fill_in 'Password', :with =&gt; 'password'
+&nbsp; &nbsp; end
+&nbsp; &nbsp; click_link 'Sign in'
+&nbsp; &nbsp; page.should have_content 'Success'<br>
+        </code>
+    </pre>
+</div>
+</section>
+<section>
+    <section>
+        <h2>The Grid</h2>
+        <div>
+            <br>
+        </div>
+        <div>
+            <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/snikch/images/2133/the_grid_recognizer.jpg" style="">
+            <br>
+        </div>
+    </section>
+    <section>
+        <h2>Actually</h2>
+        <div>
+            <img src="https://s3.amazonaws.com/media-p.slid.es/uploads/snikch/images/2131/the_grid_shit.png" style="">
+            <br>
+        </div>
+    </section>
+    <section>
+        <h1>Selenium Grid 2</h1>
+        <div>
+            <img src="http://dl.dropbox.com/u/3155323/Screenshots/9yvqb~_hd~jb.png" style="">
+            <br>
+        </div>
+        <div>
+<div style="text-align: center;">
+<img src="http://dl.dropbox.com/u/3155323/Screenshots/87o7q9cfenjo.png" style="">
+<br>
+</div>
+</div>
+</section>
+        <section>
+            <h2>GRID?</h2>
+            <blockquote>"A single interface for all of the things"&nbsp;</blockquote>
+            <p>
+            <br>
+        </p>
+        <div>
+            <ul>
+                <li style="text-align: left; font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">Central Hub with many nodes</li>
+                <li style="font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">
+                    <div style="text-align: left;">
+                        <span>Each node has their</span>
+                    </div>
+                    <div style="text-align: left;">
+                        <span>&nbsp;own capabilities (e.g. browsers)</span>
+                    </div>
+                </li>
+                <li style="text-align: left; font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">Hub routes requests for browsers to nodes</li>
+                <li style="text-align: left; font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">Easy to scale</li>
+                <li style="text-align: left; font-size: 35.94248962402344px; font-style: normal; font-variant: normal;">Easy to add new browsers</li>
+            </ul>
+        </div>
+    </section>
+    <section>
+        <h1>Demo 3</h1>
+<h2>The Grid</h2>
+
+</section>
+    </section>
+    <section>
+        <section>
+            <h1>How do I <b>actually</b> use this?</h1>
+        </section>
+        <section>
+            <h2>Web Apps with enhanced functionality</h2>
+            <div>
+                <ul>
+                    <li>Small javascript enhancements</li>
+                    <li>Run normal acceptance tests,<br>checking javascript runs correctly</li>
+                    <li>Check user interface</li>
+                    <li>Check responsive interface</li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <h2>FULLY INSANE JS web Apps</h2>
+            <div>
+                <ul>
+                    <li>Benefit is far more obvious</li>
+                    <li>Test interactions &amp; processes with<br>real browsers</li>
+                    <li>Ensure core functionality isn't broken</li>
+                    <li>You have no alternative</li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <h2>Do whatever feels right</h2>
+            <div>
+                <ul>
+                    <li>Payments sometimes failing? Test them</li>
+                    <li>Users complaining modals offscreen? Test them</li>
+                    <li>Design regressions? Screenshot them</li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <h1>Demo 4</h1>
+<h2>SCREENSHOTS &amp; RESIZING</h2>
+
+</section>
+        </section>
+        <section>
+            <h1>Thanks!</h1>
+            <div>
+                <br>
+            </div>
+            <h2>Mal Curtis</h2>
+            <div>
+                <br>
+            </div>
+            <div>@snikchnz</div>
+        </section>
+    </div>
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

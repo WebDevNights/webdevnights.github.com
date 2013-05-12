@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Talk - James Rowlands - @jrowlands</title>
+		<script type="text/javascript" src="js/d3.v3.js"></script>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="data/stemNodes.json"></script>
+		<style type="text/css">
+		
+			div.bar {
+				display: inline-block;
+				width: 20px;
+				height: 75px;	/* Gets overriden by D3-assigned height below */
+				margin-right: 2px;
+				background-color: teal;
+			}
+			
+			
+			.axis path,
+			.axis line {
+				fill: none;
+				stroke: black;
+				shape-rendering: crispEdges;
+			}
+			
+			.axis text {
+				font-family: sans-serif;
+				font-size: 11px;
+			}
+			
+			circle {
+				fill: blue;
+			}
+			
+			circle:hover {
+				fill: orange;
+			}
+			
+			#tooltip {
+				position: absolute;
+				width: 200px;
+				height: auto;
+				padding: 10px;
+				background-color: white;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+				pointer-events: none;
+			}
+			
+			#tooltip.hidden {
+				display: none;
+			}
+			
+			#tooltip p {
+				margin: 0;
+				font-family: sans-serif;
+				font-size: 16px;
+				line-height: 20px;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<h1>Force Directed Graph </h1>
+		
+		<div id="tooltip" class="hidden">
+			<p><strong><span id="stem">100</span></strong></p>
+			<p>Count: <span id="count">100</span></p>
+		</div>
+		<div id="d3-bar">
+			
+		</div>
+		
+		<script type="text/javascript">
+//get me some data
+var dataset = [];
+var graphHeight = 800;
+var graphWidth = 1400;
+var leftPadding = 75;
+var bottomPadding = 30;
+	
+function filterNodes(element, index, array) { return true; }	
+
+var minItemCount = d3.min(stemNodes.nodes, function(d) { return d.item_count; });	
+var maxItemCount = d3.max(stemNodes.nodes, function(d) { return d.item_count; });	
+
+var radiusScale = d3.scale.linear()
+					.domain([minItemCount, maxItemCount])
+					.range([5, 20]);
+					
+var svg = d3.select("body")
+			.append("svg")
+		    .attr("width", graphWidth)
+		    .attr("height", graphHeight);
+
+var force = d3.layout.force() 
+			.nodes(stemNodes.nodes)
+            .links(stemNodes.links)
+            .size([graphWidth, graphHeight])
+            .start();
+
+var link = svg.selectAll(".link")
+				.data(stemNodes.links)
+ 				.enter()
+ 				.append("line")
+				.attr("class", "link")
+				.attr("tabindex", "-1")
+				.style("stroke-width", 2)
+				.style("stroke", function(d) { 
+					return "rgb(" + parseInt(d.percentage * 2.56) + ",0,0)"; 
+				});
+
+var node = svg.selectAll(".node")
+      			.data(stemNodes.nodes)
+    				.enter()
+    				.append("g")
+      			.attr("class", "node")
+       			.attr("tabindex", "-1")
+      			.call(force.drag);
+    			    			
+node.append("circle")
+  	.attr("class", "node")
+  	.attr("r", function(d) { return radiusScale(d.item_count ); })
+  	.attr("tabindex", "-1")
+  	.call(force.drag);
+	
+node.append("text")
+    .attr("dx", 12)
+    .attr("dy", "8")
+    .attr("tabindex", "-1")
+    .attr("fill", "green")
+    .text(function(d) { return d.stem });
+	  
+force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+ });
+
+ /**
+node.on("mouseover", function(d) {
+	var xPosition = d.x;
+	var yPosition = d.y;
+
+	//Update the tooltip position and value
+	d3.select("#tooltip")
+		.style("left", xPosition + "px")
+		.style("top", yPosition + "px");					
+	d3.select("#count")
+		.text(d.item_count);
+	d3.select("#stem")
+		.text(d.stem);
+	
+	//Show the tooltip
+	d3.select("#tooltip").classed("hidden", false);
+		
+})
+.on("mouseout", function() {
+   
+		//Hide the tooltip
+	d3.select("#tooltip").classed("hidden", true);
+		
+});	
+// */
+		</script>
+	</body>
+</html>

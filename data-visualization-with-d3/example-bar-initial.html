@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3 Talk - James Rowlands - @jrowlands</title>
+		<script type="text/javascript" src="js/d3.v3.js"></script>
+		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="js/raphael-min.js"></script>
+		<script type="text/javascript" src="js/morris.js"></script>
+		
+		<!-- talk code -->
+		<script type="text/javascript" src="data/stemCount.json"></script>
+		<script type="text/javascript" src="data/reserveStemCount.json"></script>
+		<link rel="stylesheet" type="text/css" href="barGraph.css">
+
+	</head>
+	<body>
+		<h1>Simple SVG Based Graph with Interactivity, Adding/Removing Data</h1>
+		
+		<p><a href="#" id="add" class="change-data">Add a new data value</a></p>
+		<p><a href="#"  id="remove" class="change-data">Remove a data value</a></p>
+		<p>Current Sort Order: <span id="sortOrderName">Count</span> (<a href="#" id="changeSortOrder">change</a>)</p>
+		
+		<div id="tooltip" class="hidden">
+			<p><strong><span id="stem">100</span></strong></p>
+			<p>Count: <span id="count">100</span></p>
+		</div>
+		<div id="d3-bar">
+			
+		</div>
+		<script type="text/javascript">
+
+var dataset = [];
+var graphHeight = 400;
+var graphWidth = 800;
+var leftPadding = 75;
+var bottomPadding = 50;
+
+var sortOrder = true;
+dataset = stemCount;			
+		
+//Define key function, to be used when binding data
+var key = function(d) {
+	return d.stem;
+};		
+
+var maxValue = function(data) {
+		return d3.entries(data)
+	    // sort by value descending
+	    .sort(function(a, b) { return d3.descending(a.count, b.count); })
+	    // take the first option
+	    [0].value.count;  //[0] returns a key value pair, so value accesses the stem object
+	}
+
+//Create SVG element
+var svg = d3.select("#d3-bar")
+			.append("svg")
+			.attr("width", graphWidth)
+			.attr("height", graphHeight);
+
+//create some scales
+var xScale = d3.scale.ordinal()
+	.domain(d3.range(dataset.stems.length))
+	.rangeRoundBands([leftPadding, graphWidth - leftPadding], 0.05);  //randgeRound ensures whole numbers
+	
+var yScale = d3.scale.linear()  //how to scale domain to range could also be pow, sqrt
+	.domain([0, maxValue(dataset.stems)])  //range of input values
+	.range([0, graphHeight - bottomPadding]); //range of output values
+	
+var yAxisScale = d3.scale.linear()  
+	.domain([0, maxValue(dataset.stems)])  
+	.range([graphHeight - bottomPadding, 0]);			
+	
+//Create bars
+svg.selectAll("rect")
+   .data(dataset.stems)
+   .enter()
+   .append("rect")
+   .attr("x", function(d, i) { 
+   		return xScale(i); 
+   })
+   .attr("y", function(d) {
+   		return graphHeight - yScale(d.count) - bottomPadding;
+   })
+   .attr("width", xScale.rangeBand() - 2)
+   .attr("height", function(d) {
+   		return yScale(d.count);
+   })
+   .attr("fill", function(d) {
+		return "rgb(" + parseInt((d.capital - 0.5) * 256) + "," + parseInt((d.capital - 0.5) * 256) + ",0)";
+   });
+   
+//1. Comment Below Line to add Axis
+ /**	
+//Define X axis
+var xAxis = d3.svg.axis()
+		  .scale(xScale)
+		  .orient("bottom")
+		  .ticks(5) //aprox numebr of ticks
+		  .tickFormat(function(d, i) {
+		  	 return svg.selectAll("rect").data()[i].stem;
+		  });
+
+//Define Y axis
+var yAxis = d3.svg.axis()
+				  .scale(yAxisScale)
+				  .orient("left")
+				  .ticks(5);	
+//Create X axis
+svg.append("g")
+	.attr("class", "xaxis axis")
+	.attr("transform", "translate(0," + (graphHeight - bottomPadding) + ")")
+	.call(xAxis);
+
+
+//Create Y axis
+svg.append("g")
+	.attr("class", "yaxis axis")
+	.attr("transform", "translate(" + leftPadding + ",0)")
+	.call(yAxis);				  
+// */			
+
+//2. Comment Below line to format X axis
+ /**	
+formatXAxis();
+function formatXAxis() {
+	svg.selectAll(".xaxis text")  //http://www.d3noob.org/2013/01/how-to-rotate-text-labels-for-x-axis-of.html
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", function(d) {
+            return "rotate(-65)" 
+            });
+}
+// */        
+
+//3. Comment below line to add tooltip popup
+ /*	
+svg.selectAll("rect")
+	.on("mouseover", function(d) {
+
+		//Get this bar's x/y values, then augment for the tooltip
+		var xPosition = parseFloat(d3.select(this).attr("x")) + xScale.rangeBand() / 2;
+		var yPosition = parseFloat(d3.select(this).attr("y")) / 2 + graphHeight / 2;
+
+		//Update the tooltip position and value
+		d3.select("#tooltip")
+			.style("left", xPosition + "px")
+			.style("top", yPosition + "px");					
+		d3.select("#count")
+			.text(d.count);
+		d3.select("#stem")
+			.text(d.stem);
+   
+		//Show the tooltip
+		d3.select("#tooltip").classed("hidden", false);
+
+   })
+   .on("mouseout", function() {	 
+		d3.select("#tooltip").classed("hidden", true);				
+   });
+  //  */	
+			
+//4. Comment below line to add sorting
+ /**
+$('#changeSortOrder').click(function() {
+	sortBars();
+	if(sortOrder) {
+		$("#sortOrderName").text("Count");
+	}
+	else {
+		$("#sortOrderName").text("Capital");
+	}
+	return false;
+});
+
+//Define sort function		
+var sortBars = function() {
+	//Flip value of sortOrder
+   	sortOrder = !sortOrder;
+	var svg = d3.select("#d3-bar");
+	svg.selectAll("rect")
+	   .sort(function(a, b) {
+	   		if (sortOrder) {
+		   		return d3.descending(a.count, b.count);
+	   		} else {
+		   		return d3.ascending(a.capital, b.capital);
+	   		}
+	   	})
+	   .transition()
+	   .delay(function(d, i) {
+		   return i * 10;
+	   })
+	   .duration(500)
+	   .attr("x", function(d, i) {
+	   		return xScale(i);
+	   });
+	
+	//update xaxis
+	svg.select(".xaxis").transition().duration(500).call(xAxis);
+	formatXAxis();   
+};			
+// */
+
+//5. Comment line below to add add/remove functionality	
+/**		
+d3.selectAll(".change-data")
+	.on("click", function() {
+
+		//See which p was clicked
+		var paragraphID = d3.select(this).attr("id");
+		
+		//Decide what to do next
+		if (paragraphID == "add") {
+			//Add a data value					
+			dataset.stems.push(
+				reserveStemCount.stems[0]
+			);
+			//remove from reserve list
+			reserveStemCount.stems.shift();
+		} else {
+			//Remove a value
+			dataset.stems.shift();	//Remove one value from dataset
+		}
+		
+		//Update scale domains
+		xScale.domain(d3.range(dataset.stems.length));
+		yScale.domain([0, maxValue(dataset.stems)]);
+		yAxisScale.domain([0, maxValue(dataset.stems)])  //range of input values
+			
+					 
+		//Select…
+		var svg = d3.select("#d3-bar svg");
+		var bars = svg.selectAll("rect")
+			.data(dataset.stems, key);
+		
+		//Enter…
+		bars.enter()
+			.append("rect")
+			   .attr("x", function(d, i) {  //d is the data object, i is a counter
+			   		return 2* xScale(i); //2 * i gives some padding between bars
+			   })
+			   .attr("y", function(d) {
+			   		return graphHeight - yScale(d.count) - bottomPadding;
+			   		
+			   })
+			   .attr("width", function(d) {
+			   		return (xScale.rangeBand() - 2);
+			   })
+			   .attr("height", function(d) {
+			   		return yScale(d.count);
+			   })
+			   .attr("fill", function(d) {
+			   		console.log(d);
+					return "rgb(" + parseInt((d.capital) * 256) + "," + parseInt((d.capital) * 256) + ",0)";
+			   });
+		
+		//Update…
+		bars.transition()
+			.duration(500)
+			.attr("x", function(d, i) {
+				return xScale(i);
+			})
+			.attr("y", function(d) {
+				return graphHeight - yScale(d.count) - bottomPadding;
+			})
+			.attr("width", xScale.rangeBand() - 2)
+			.attr("height", function(d) {
+				return yScale(d.count);
+			});
+		
+		//Exit…
+		bars.exit()
+			.transition()
+			.duration(500)
+			.attr("x", -xScale.rangeBand())
+			.remove();
+
+		svg.select(".yaxis").call(yAxis);	
+		svg.select(".xaxis").call(xAxis);			
+		formatXAxis();  
+		return false;
+	});
+	// */
+		</script>
+	</body>
+</html>
