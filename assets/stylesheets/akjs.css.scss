@@ -1,0 +1,78 @@
+body{
+    font-family: 'PT Sans', sans-serif;
+    min-height: 740px;
+
+    background: rgb(215, 215, 215);
+    //background: -webkit-radial-gradient(rgb(240, 240, 240), rgb(190, 190, 190));
+
+    -webkit-font-smoothing: antialiased;
+	-webkit-transition: all 300ms ease;
+}
+*{
+	-webkit-transition: all 300ms ease;
+}
+h1,h2,h3{
+	font-family: 'CollegiateRegular';
+	margin: 0;
+	text-shadow: 1px 2px 0px #fff;
+}
+h1{
+	font-size: 102px;
+}
+h2{
+	font-size:54px;
+	line-height: 80px;
+	color:#555;
+}
+h3{
+	font-size: 40px;
+	line-height: 60px;
+}
+p{
+	text-align: justify;
+	width: 800px;
+	font-size: 30px;
+}
+code{
+	font-size:70px;
+}
+
+.centered{
+	h1, h2,h3, p {
+		text-align: center;
+	}
+	text-align:center;
+}
+.step{
+	opacity: 0.3;
+	width: 900px;
+	box-sizing: border-box;
+}
+
+.active{
+	opacity: 1;
+}
+
+.aligned-list{
+	margin-top:20px;
+	li{
+		display:inline-block;
+		padding: 20px;
+		margin: 20px;
+		font-size:30px;
+		color: #fff;
+		background-color: #666;
+		border-radius: 60px;
+	}
+}
+body.code{
+    background: rgb(30, 30, 30);
+    //background: -webkit-radial-gradient(rgb(60, 60, 60), rgb(15, 15, 15));
+	h1, h2, h3, p{
+		color: #fff;
+		text-shadow: 1px 2px 2px #000;
+	}
+	h2{
+		color: #eee;
+	}
+}
