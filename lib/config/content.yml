@@ -12,6 +12,8 @@ desktop:
             content: ["cockblock", "webdevnights01"]
         webdevnights02:
             content: ["webdevnights02"]
+        webdevnights03:
+            content: ["webdevnights03"]
         feature-flipping:
             index:
                 content: ["cockblock", "feature-flipping"]
